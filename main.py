@@ -4,13 +4,20 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import matplotlib.font_manager as fm
 import os
+import urllib.request
+
+# 한글 폰트 다운로드 및 등록 (Streamlit Cloud 환경 대응)
+FONT_URL = "https://github.com/google/fonts/raw/main/ofl/nanumgothic/NanumGothic-Regular.ttf"
+FONT_PATH = "NanumGothic-Regular.ttf"
+if not os.path.exists(FONT_PATH):
+    urllib.request.urlretrieve(FONT_URL, FONT_PATH)
+    fm.fontManager.addfont(FONT_PATH)
+
+plt.rcParams['font.family'] = 'NanumGothic'
+plt.rcParams['axes.unicode_minus'] = False
 
 st.set_page_config(page_title="데이터 대시보드", layout="wide")
 st.title("데이터 대시보드")
-
-# 한글 폰트 설정 (Windows: Malgun Gothic)
-plt.rcParams['font.family'] = 'Malgun Gothic'
-plt.rcParams['axes.unicode_minus'] = False
 
 # 1. 데이터셋 업로드
 data_file = st.file_uploader("CSV 파일 업로드", type=["csv"])
